@@ -1,2 +1,1 @@
-# nyctaxi
-Cloud and Big Data assignment 
+# oxclo_nyctaxi

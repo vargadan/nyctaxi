@@ -1,0 +1,15 @@
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/batch/BatchTask.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/batch/MaxFareAndMaxTipPeriods.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/TripDataItem.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/batch/BatchTaskRunner.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/StatisticsRunner.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/batch/TopVehicleEarnings.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/Consts.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/realtime/RealTimeRunner.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/realtime/BestDriver.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/batch/AverageSpeeds.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/batch/DriverOfTheYear.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/TripDateUtils.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/CountRunner.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/chart/TopEarnerCharsGenerator.java
+/Users/dani/Documents/workspace/oxclo_nyctaxi/src/main/java/dani/nyctaxi/TripSparkUtils.java

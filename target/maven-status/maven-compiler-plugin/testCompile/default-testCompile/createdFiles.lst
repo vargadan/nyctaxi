@@ -1,0 +1,7 @@
+dani/nyctaxi/batch/TestMaxFareAndMaxTip.class
+dani/nyctaxi/batch/TestTopVehicleEarnings.class
+dani/nyctaxi/TripDateUtils_getTripDateS_TEST.class
+dani/nyctaxi/test/util/IsVeryCloseTo.class
+dani/nyctaxi/batch/TestAvgSpeedFunctions.class
+dani/nyctaxi/batch/TestDriverOfTheYear.class
+dani/nyctaxi/TripDateUtils_getWeighetdDateBuckets_TEST.class

@@ -1,0 +1,69 @@
+sudo yum -y install java-1.8.0
+export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64/
+export AWS_ACCESS_KEY_ID=AKIAI6TXNQAK7AQXF5VQexport AWS_SECRET_ACCESS_KEY=SO1XCrsB0FhSBwIREE5N448LgMf9aBOV9j1tn81s
+
+split -d -l 10000000 --verbose ./nyctaxi-input/ compelete_sorted
+
+173185091
+171861105
+
+wget -q -O - http://169.254.169.254/latest/meta-data/public-hostname
+
+./ec2/spark-ec2 -i ~/AWS/nyctaxi.pem -k nyctaxi -t c4.xlarge -m t2.medium -v 1.5.2 -r eu-west-1 -z eu-west-1a -s 4 --ebs-vol-size=50 --ebs-vol-type=gp2 \
+--master-opts=-Dspark.eventLog.enabled=true --copy-aws-credentials  \
+--user-data ~/AWS/nyctaxi-ec2-userdata.txt --subnet-id subnet-10e0d975 --vpc-id vpc-7a56001f launch nyctaxi-analitics
+
+./ec2/spark-ec2 -i ~/AWS/nyctaxi.pem -k nyctaxi -t m3.xlarge -m m3.large -r eu-west-1 -z eu-west-1a -s 3 --ebs-vol-size=50 --ebs-vol-type=gp2 --master-opts=-Dspark.eventLog.enabled=true --copy-aws-credentials  --user-data ~/AWS/nyctaxi-ec2-userdata.txt launch nyctaxi-analitics
+
+./bin/hadoop distcp -Dfs.s3.awsAccessKeyId=$AWS_ACCESS_KEY_ID -Dfs.s3.awsSecretAccessKey=$AWS_SECRET_ACCESS_KEY "s3n://nyctaxi-input-split/*.csv" "hdfs://ip-10-11-27-60.eu-west-1.compute.internal:9010/data/"
+
+<property>
+  <name>dfs.data.dir</name>
+  <value>/vol0/dfs</value>
+</property>
+
+hadoop distcp s3n://$AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY@nyctaxi-input-split/ hdfs://10.196.130.203:9010/data
+hadoop fs -fs hdfs://10.196.130.203:9010/data
+
+5/12/24 02:29:38 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 81.0, whose tasks have all completed, from pool 
+15/12/24 02:29:38 INFO scheduler.DAGScheduler: Job 54 finished: count at RealTimeRunner.java:112, took 0.203040 s
+* * * * * 
+totalCount : 1402169time : 2013-11-04T00:07:03
+The best driver of the last 24 HOURS is : Result [driver=EF5ABC4F0E5F2D7B8E12EF044A9C1F11, distance=229.99999999999997]
+	 trips.count = 484919
+The best driver of the last 4 HOURS is : Result [driver=4E65B406A19095243D41806B85A5487B, distance=108.30000000000001]
+	 trips.count = 83226
+The best driver of the last 1 HOUR is : Result [driver=7AA9D60B4BE676D08E713F02BECE6527, distance=72.0]
+	 trips.count = 14268
+All tasks were running for 2 seconds.
+* * * * * * *
+
+....SLEEPING....
+
+from pyspark.sql import SQLContext
+from pyspark.sql.types import *
+sqlContext = SQLContext(sc)
+customSchema = StructType([ \
+    StructField("vehicle", StringType(), True), \
+    StructField("driver", StringType(), True), \
+    StructField("pickup_datetime_s", StringType(), True), \
+    StructField("dropoff_datetime_s", StringType(), True), \
+    StructField("trip_time_in_secs", IntegerType(), True), \
+    StructField("trip_distance", DoubleType(), True), \
+    StructField("pickup_longitude", DoubleType(), True), \
+    StructField("pickup_latitude", DoubleType(), True), \
+    StructField("dropoff_longitude", DoubleType(), True), \
+    StructField("dropoff_latitude", DoubleType(), True), \
+    StructField("payment_type", StringType(), True), \
+    StructField("fare_amount", DoubleType(), True), \
+    StructField("surcharge", DoubleType(), True), \
+    StructField("mta_tax", DoubleType(), True), \
+    StructField("tip_amount", DoubleType(), True), \
+    StructField("tolls_amount", DoubleType(), True), \
+    StructField("total_amount", DoubleType(), True)])
+df = sqlContext.read \
+    .format('com.databricks.spark.csv') \
+    .options(header='true') \
+    .load('hdfs://10.196.130.203:9010/data/*', schema = customSchema)
+    
+sample.write.format('com.databricks.spark.csv').options(codec="org.apache.hadoop.io.compress.GzipCodec").save('hdfs://10.196.130.203:9010/sample/sample.csv')
